@@ -17,17 +17,17 @@ export default function App() {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
-  const addContact = data => {
+  const addContact = ({ name, number }) => {
     const contact = {
-      name: data.name,
-      number: data.number,
       id: nanoid(),
+      name: name,
+      number: number,
     };
-    setContacts([...contacts, contact]);
+    if (contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase())) {
+      return alert(`${name} is already in contacts`);
+    }
+    setContacts(prevState => [...prevState, contact]);
   };
-
-  const checkDublicatesName = value =>
-    contacts.some(({ name }) => name.toLowerCase() === value.toLowerCase());
 
   const getFilteredContact = () => {
     const normalizedFilter = filter.toLowerCase();
@@ -50,7 +50,6 @@ export default function App() {
       <h1>Phonebook</h1>
       <ContactsForm
         addContact={addContact}
-        dublicateName={checkDublicatesName}
       />
 
       <h2>Contacts</h2>

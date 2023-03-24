@@ -1,15 +1,13 @@
 import { useState } from 'react';
 import css from './ContactForm.module.css';
 
-export default function ContactsForm({ addContact, dublicateName }) {
+export default function ContactsForm({ addContact }) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
   const onHandleSubmit = e => {
     e.preventDefault();
-    dublicateName(name)
-      ? alert(`${name} is already in contacts`)
-      : addContact({ name, number });
+    addContact({ name, number });
     setName('');
     setNumber('');
   };
